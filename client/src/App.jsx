@@ -3,11 +3,13 @@ import "./App.css"
 import "./index.css"
 import ProgressStepper from "./components/ProgressStepper";
 import MachineChecks from "./components/MachineChecks";
-import Tools from "./components/Tools";
+import ToolSetup from "./components/ToolSetup";
 
 
 function App() {
   const [currentStage, setCurrentStage] = useState(1);
+  const [completedStage, setCompletedStage] = useState(0);
+  const progressPercentage = (completedStage / 5) * 100;
   return (
     <div className="app">
       <header className="top-strip">
@@ -41,9 +43,26 @@ function App() {
         <h1>VMC Operator HMI</h1>
         <p>Machine Checks</p>
 
-        <ProgressStepper currentStage = {currentStage}/>
-        <MachineChecks  onNext= {() => setCurrentStage(2)}/>
-        <Tools  onNext={() => setCurrentStage(3)}/>
+        <ProgressStepper 
+          currentStage = {currentStage} 
+          progressPercentage = {progressPercentage}
+        />
+
+        {currentStage === 1 && (
+          <MachineChecks  
+            onNext= {() => {
+              setCurrentStage(2);
+              setCompletedStage(1);
+            }}/>
+        )}
+        {currentStage === 2 && (
+          <ToolSetup  
+            onNext={() => {
+              setCurrentStage(3);
+              setCompletedStage(2);
+          }}/>
+        )}
+        
       </main>
     </div>
   );

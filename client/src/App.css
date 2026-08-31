@@ -155,3 +155,35 @@ body {
 .check-progress + button {
   margin-top: 16px;
 }
+/* tools Setup */
+.tool-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.tool-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+}
+
+.tool-item button {
+  margin-top: 0;
+}
+
+.tool-item button:disabled {
+  cursor: default;
+}
+
+.check-progress {
+  margin-top: 20px;
+  font-weight: 600;
+}
+.check-progress + button {
+  margin-top: 16px;
+}

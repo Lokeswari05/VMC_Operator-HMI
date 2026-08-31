@@ -1,4 +1,5 @@
-function ProgressStepper({currentStage}) {
+
+function ProgressStepper({currentStage, progressPercentage}) {
     const stages = [
         "Machine checks",
         "Tools",
@@ -26,7 +27,7 @@ function ProgressStepper({currentStage}) {
                 })}
             </div>
             <div className="progress-text">
-                stage 1 of 5 -- 20% complete
+                Stage {currentStage} of 5 -- {progressPercentage}% completed
             </div>
         </div>
         </>

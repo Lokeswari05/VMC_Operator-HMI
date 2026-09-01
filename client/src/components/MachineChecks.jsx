@@ -48,7 +48,7 @@ function MachineChecks({onNext}){
                 {confirmedChecks.length} / {checks.length} checks completed
             </p>
             <button 
-                onClick={onNext}
+                onClick={() => onNext(true)}
                 disabled={confirmedChecks.length !== checks.length}
             >
                 Next

@@ -5,12 +5,17 @@ import ProgressStepper from "./components/ProgressStepper";
 import MachineChecks from "./components/MachineChecks";
 import ToolSetup from "./components/ToolSetup";
 import WorkpieceSetup from "./components/WorkpieceSetup";
+import ReadyReview from "./components/ReadyReview";
 
 
 function App() {
   const [currentStage, setCurrentStage] = useState(1);
   const [completedStage, setCompletedStage] = useState(0);
   const progressPercentage = (completedStage / 5) * 100;
+
+  const [machineComplete, setMachineComplete] = useState(false);
+  const [toolsComplete, setToolsComplete] = useState(false);
+  const [workpieceComplete, setWorkpieceComplete] = useState(false);
   return (
     <div className="app">
       <header className="top-strip">
@@ -51,25 +56,46 @@ function App() {
 
         {currentStage === 1 && (
           <MachineChecks  
-            onNext= {() => {
-              setCurrentStage(2);
-              setCompletedStage(1);
+            onNext= {(complete) => {
+              if(complete){
+                setMachineComplete(true);
+                setCurrentStage(2);
+                setCompletedStage(1);
+              }
             }}/>
         )}
         {currentStage === 2 && (
           <ToolSetup  
-            onNext={() => {
-              setCurrentStage(3);
-              setCompletedStage(2);
-          }}/>
+            onNext={(complete) => {
+              if(complete){
+                setToolsComplete(true);
+                setCurrentStage(3);
+                setCompletedStage(2);
+                }
+            }}
+          />
         )}
         {currentStage === 3 && (
           <WorkpieceSetup 
-            onNext ={() =>{
-              setCurrentStage(4);
-              setCompletedStage(3);
+            onNext ={(complete) =>{
+              if(complete){
+                setWorkpieceComplete(true);
+                setCurrentStage(4);
+                setCompletedStage(3);
+              }
             }}
           />
+        )}
+        {currentStage === 4 && (
+          <ReadyReview
+          machineComplete = {machineComplete}
+          toolsComplete = {toolsComplete}
+          workpieceComplete = {workpieceComplete}
+          onNext = {() => {
+            setCurrentStage(5);
+            setCompletedStage(4);
+          }}
+        />
         )}
       </main>
     </div>

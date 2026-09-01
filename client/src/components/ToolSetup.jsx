@@ -71,7 +71,7 @@ function ToolSetup({onNext}){
             </p>
 
             <button
-                onClick = {onNext}
+                onClick = {() => onNext(true)}
                 disabled = {confirmedTools.length !== tools.length}
             >
                 Next

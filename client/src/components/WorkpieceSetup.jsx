@@ -77,7 +77,7 @@ function WorkpieceSetup({onNext}) {
             </div>
 
             <button 
-                onClick={onNext}
+                onClick={() => onNext(true)}
                 disabled = {confirmedItems.length !== setupItems.length}
             >
                 Next

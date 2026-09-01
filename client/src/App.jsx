@@ -4,6 +4,7 @@ import "./index.css"
 import ProgressStepper from "./components/ProgressStepper";
 import MachineChecks from "./components/MachineChecks";
 import ToolSetup from "./components/ToolSetup";
+import WorkpieceSetup from "./components/WorkpieceSetup";
 
 
 function App() {
@@ -62,7 +63,14 @@ function App() {
               setCompletedStage(2);
           }}/>
         )}
-        
+        {currentStage === 3 && (
+          <WorkpieceSetup 
+            onNext ={() =>{
+              setCurrentStage(4);
+              setCompletedStage(3);
+            }}
+          />
+        )}
       </main>
     </div>
   );

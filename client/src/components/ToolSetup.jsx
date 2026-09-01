@@ -58,7 +58,7 @@ function ToolSetup({onNext}){
                             onClick = {() => handleConfirm(tool.number)}
                             disabled = {confirmedTools.includes(tool.number)}
                         >
-                            {confirmedTools.includes(tool.number) ? "Confirmed" : "Insert & Confirm"}
+                            {confirmedTools.includes(tool.number) ? "Confirmed" : "Confirm"}
                         </button>
 
                         
@@ -71,7 +71,7 @@ function ToolSetup({onNext}){
             </p>
 
             <button
-                onclick = {onNext}
+                onClick = {onNext}
                 disabled = {confirmedTools.length !== tools.length}
             >
                 Next

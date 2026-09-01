@@ -6,9 +6,16 @@ import MachineChecks from "./components/MachineChecks";
 import ToolSetup from "./components/ToolSetup";
 import WorkpieceSetup from "./components/WorkpieceSetup";
 import ReadyReview from "./components/ReadyReview";
-
+import Operation from "./components/Operation"
 
 function App() {
+  const machineInfo = {
+    operatorName: "Arun Kumar",
+    machineId: "VMC-001",
+    cncProgram: "VMC_BRACKET_01",
+    workOffset: "G54",
+};
+
   const [currentStage, setCurrentStage] = useState(1);
   const [completedStage, setCompletedStage] = useState(0);
   const progressPercentage = (completedStage / 5) * 100;
@@ -16,32 +23,33 @@ function App() {
   const [machineComplete, setMachineComplete] = useState(false);
   const [toolsComplete, setToolsComplete] = useState(false);
   const [workpieceComplete, setWorkpieceComplete] = useState(false);
+  const [operationStatus, setOperationStatus] = useState("READY");
   return (
     <div className="app">
       <header className="top-strip">
         <div>
           <span className="label">OPERATOR</span>
-          <strong>Arun Kumar</strong>
+          <strong>{machineInfo.operatorName}</strong>
         </div>
 
         <div>
           <span className="label">MACHINE</span>
-          <strong>VMC-001</strong>
+          <strong>{machineInfo.machineId}</strong>
         </div>
 
         <div>
           <span className="label">CNC PROGRAM</span>
-          <strong>AL_COMP_001_REV_A.nc</strong>
+          <strong>{machineInfo.cncProgram}</strong>
         </div>
 
         <div>
           <span className="label">WORK OFFSET</span>
-          <strong>G54</strong>
+          <strong>{machineInfo.workOffset}</strong>
         </div>
 
         <div>
           <span className="label">MODE</span>
-          <strong>SETUP</strong>
+          <strong>{operationStatus}</strong>
         </div>
       </header>
 
@@ -97,6 +105,13 @@ function App() {
           }}
         />
         )}
+        {currentStage === 5 && (
+          <Operation 
+            status={operationStatus}
+            setStatus={setOperationStatus}
+          />
+        )}
+        
       </main>
     </div>
   );

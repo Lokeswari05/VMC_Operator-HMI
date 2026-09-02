@@ -1,24 +1,39 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 function MachineChecks({onNext}){
-    const checks = [
-        "Power/control available",
-        "E-stop released",
-        "Guard/door closed",
-        "No active alarm",
-        "Lubrication/coolant ready",
-        "Reference return complete",
-    ];
+    const[checks, setChecks] = useState([]);
 
     const [confirmedChecks, setConfirmedChecks] = useState([]);
     
-    function handleConfirm(index){
-        setConfirmedChecks((previousChecks) => {
-            if(previousChecks.includes(index)){
-                return previousChecks;
+    useEffect(() => {
+        fetch("http://localhost:5000/api/checks")
+        .then((response) => response.json())
+        .then((data) => setChecks(data));
+    }, []);
+    
+    async function handleConfirm(id){
+        try {
+            const response = await fetch(`http://localhost:5000/api/checks/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to confirm check");
             }
-            return [...previousChecks, index];
-        });
+
+            setConfirmedChecks((previousChecks) => {
+                if (previousChecks.includes(id)) {
+                    return previousChecks;
+                }
+
+                return [...previousChecks, id];
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return(
@@ -28,17 +43,17 @@ function MachineChecks({onNext}){
         
 
             <div className = "check-list">
-                {checks.map((check, index) => (
+                {checks.map((check) => (
                     <div 
                         className = "check-item"
-                        key = {check}
+                        key = {check.id}
                     >
-                        <span>{check}</span>
+                        <span>{check.label}</span>
                         <button
-                            onClick ={() => handleConfirm(index)}
-                            disabled = {confirmedChecks.includes(index)}
+                            onClick ={() => handleConfirm(check.id)}
+                            disabled = {confirmedChecks.includes(check.id)}
                         >
-                            {confirmedChecks.includes(index) ? "confirmed" : "confirm"}
+                            {confirmedChecks.includes(check.id) ? "confirmed" : "confirm"}
                         </button>
                     </div>
                 ))}

@@ -55,7 +55,7 @@ function App() {
 
       <main className="main-content">
         <h1>VMC Operator HMI</h1>
-        <p>Machine Checks</p>
+        {/* <p>Machine Checks</p> */}
 
         <ProgressStepper 
           currentStage = {currentStage} 

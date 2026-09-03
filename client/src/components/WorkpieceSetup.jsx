@@ -1,54 +1,85 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function WorkpieceSetup({onNext}) {
-    const workpiece = {
-        Fixture : "Machine Vise",
-        orientation: "Datum A facing opertor",
-        clamping: "Clamp workpiece firmly and verify seating",
-        material: "Aluminium 6061 ",
-        drawingRevision: "Rev B",
-        workOffset: "G54",
-    };
+    // const workpiece = {
+    //     Fixture : "Machine Vise",
+    //     orientation: "Datum A facing opertor",
+    //     clamping: "Clamp workpiece firmly and verify seating",
+    //     material: "Aluminium 6061 ",
+    //     drawingRevision: "Rev B",
+    //     workOffset: "G54",
+    // };
 
-    const setupItems = [
-        {
-            id: "Fixture",
-            label : "Fixture",
-            value : workpiece.Fixture,
-        },
-        {
-            id: "orientation",
-            label: "orientation",
-            value: workpiece.orientation,
-        },
-        {
-            id: "clamping",
-            label: "clamping",
-            value: workpiece.clamping,
-        },{
-            id: "material",
-            label: "material",
-            value: workpiece.material,
-        },{
-            id: "drawingRevision",
-            label: "drawingRevision",
-            value: workpiece.drawingRevision,
-        },{
-            id: "workOffset",
-            label: "workOffset",
-            value: workpiece.workOffset,
-        },
-    ];
+    // const setupItems = [
+    //     {
+    //         id: "Fixture",
+    //         label : "Fixture",
+    //         value : workpiece.Fixture,
+    //     },
+    //     {
+    //         id: "orientation",
+    //         label: "orientation",
+    //         value: workpiece.orientation,
+    //     },
+    //     {
+    //         id: "clamping",
+    //         label: "clamping",
+    //         value: workpiece.clamping,
+    //     },{
+    //         id: "material",
+    //         label: "material",
+    //         value: workpiece.material,
+    //     },{
+    //         id: "drawingRevision",
+    //         label: "drawingRevision",
+    //         value: workpiece.drawingRevision,
+    //     },{
+    //         id: "workOffset",
+    //         label: "workOffset",
+    //         value: workpiece.workOffset,
+    //     },
+    // ];
+    const [setupItems, setItems] = useState([]);
 
     const [confirmedItems, setConfirmedItems] = useState([]);
 
-    function handleConfirm(id) {
-        setConfirmedItems((previousItem) => {
-            if(previousItem.includes(id)){
-                return previousItem;
+    useEffect(() => {
+        fetch("http://localhost:5000/api/workpiece")
+        .then((response) => response.json())
+        .then((data) => setItems(data));
+    }, []);
+
+    // function handleConfirm(id) {
+    //     setConfirmedItems((previousItem) => {
+    //         if(previousItem.includes(id)){
+    //             return previousItem;
+    //         }
+    //         return [...previousItem, id];
+    //     })
+    // }
+
+    async function handleConfirm(id){
+        try {
+            const response = await fetch(`http://localhost:5000/api/workpiece/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to confirm check");
             }
-            return [...previousItem, id];
-        })
+
+            setConfirmedItems((previousItem) => {
+                if(previousItem.includes(id)){
+                    return previousItem;
+                }
+                return [...previousItem, id];
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return(

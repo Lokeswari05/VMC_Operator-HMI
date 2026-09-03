@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import MachineCheck from "./models/MachineCheck.js";
 import dns from "node:dns";
 import RequiredTool from "./models/RequiredTool.js";
+import WorkpieceSetup from "./models/WorkpieceSetup.js";
 
 dotenv.config();
 
@@ -64,6 +65,45 @@ const tools = [
     },
 ];
 
+const workpiece = [
+  {
+    id: "Fixture",
+    label : "Fixture",
+    value : "Machine Vise",
+    status: "PENDING",
+  },
+  {
+    id: "orientation",
+    label: "orientation",
+    value: "Datum A facing opertor",
+    status: "PENDING",
+  },
+  {
+    id: "clamping",
+    label: "clamping",
+    value: "Clamp workpiece firmly and verify seating",
+    status: "PENDING",
+  },
+  {
+    id: "material",
+    label: "material",
+    value: "Aluminium 6061 ",
+    status: "PENDING",
+  },
+  {
+    id: "drawingRevision",
+    label: "drawingRevision",
+    value: "REV B",
+    status: "PENDING",
+  },
+  {
+    id: "workOffset",
+    label: "workOffset",
+    value: "G54",
+    status: "PENDING",
+  },
+];
+
 await mongoose.connect(process.env.MONGO_URI);
 
 await MachineCheck.deleteMany();
@@ -75,5 +115,10 @@ await RequiredTool.deleteMany();
 await RequiredTool.insertMany(tools);
 
 console.log("All required tools are preloaded.");
+
+await WorkpieceSetup.deleteMany();
+await WorkpieceSetup.insertMany(workpiece);
+
+console.log("Workpiece are preloaded.")
 
 await mongoose.disconnect();

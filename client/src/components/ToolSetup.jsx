@@ -3,7 +3,7 @@ import { useState } from "react";
 
 function ToolSetup({onNext}){
     const cncProgram = "VMC_BRACKET_01";
-    const programRevision =  "Rev A";
+    // const programRevision =  "Rev A";
     
     const [tools, setTools] = useState([]);
 
@@ -26,9 +26,9 @@ function ToolSetup({onNext}){
     //     });
     // }
 
-    async function handleConfirm(id){
+    async function handleConfirm(toolNumber){
         try {
-            const response = await fetch(`http://localhost:5000/api/tools/${id}`, {
+            const response = await fetch(`http://localhost:5000/api/tools/${toolNumber}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -40,15 +40,15 @@ function ToolSetup({onNext}){
             }
 
             setConfirmedTools((previousTools) => {
-                if(previousTools.includes(id)){
+                if(previousTools.includes(toolNumber)){
                     return previousTools;
                 }
                 else{
-                    return [...previousTools, id];
+                    return [...previousTools, toolNumber];
                 }
             });
         } catch (error) {
-            console.error(error);
+            console.error(error);toolNumber
         }
     }
 
@@ -57,26 +57,27 @@ function ToolSetup({onNext}){
         <div className = "stage-card">
             <h2>Required Tools</h2>
             <p> CNC Program: {cncProgram}</p>
-            <p>Program Revision: {programRevision}</p>
+            {/* <p>Program Revision: {programRevision}</p> */}
 
             <div className = "tool-list">
                 
                 {tools.map((tool) => (
                     <div className = "tool-item"
-                        key ={tool.id}
+                        key ={tool.toolNumber}
                     >
-                        <span>{tool.id}</span>
-                        <span>{tool.label}</span>
+                        <span>{tool.toolNumber}</span>
+                        <span>{tool.toolType}</span>
+                        <span>{tool.programRevision}</span>
 
                         <span className = "tool-status">
-                            {confirmedTools.includes(tool.id) ? "READY" : "PENDING"}
+                            {confirmedTools.includes(tool.toolNumber) ? "READY" : "PENDING"}
                         </span>
 
                         <button
-                            onClick = {() => handleConfirm(tool.id)}
-                            disabled = {confirmedTools.includes(tool.id)}
+                            onClick = {() => handleConfirm(tool.toolNumber)}
+                            disabled = {confirmedTools.includes(tool.toolNumber)}
                         >
-                            {confirmedTools.includes(tool.id) ? "Confirmed" : "Confirm"}
+                            {confirmedTools.includes(tool.toolNumber) ? "Confirmed" : "Confirm"}
                         </button>
 
                         

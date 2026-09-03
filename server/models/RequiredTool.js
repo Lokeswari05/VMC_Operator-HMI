@@ -1,12 +1,16 @@
 import mongoose from "mongoose"
 
 const requiredToolSchema = new mongoose.Schema({
-    id:{
+    toolNumber:{
         type: String,
         required: true,
         unique: true,
     },
-    label: {
+    toolType: {
+        type: String,
+        required: true,
+    },
+    programRevision: {
         type: String,
         required: true,
     },

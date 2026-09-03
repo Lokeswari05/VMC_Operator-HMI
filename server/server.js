@@ -7,7 +7,7 @@ import { connectDB } from "./config/db.js";
 import MachineCheckRoutes from "./routes/MachineCheckRoutes.js"
 import requiredToolRoutes from "./routes/requiredToolRoutes.js"
 import WorkpieceSetupRoutes from "./routes/WorkpieceSetupRoutes.js"
-
+import ReadyReviewRoutes from "./routes/ReadyReviewRoutes.js"
 dotenv.config()
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
@@ -25,6 +25,7 @@ app.use(express.json());
 app.use("/api/checks", MachineCheckRoutes);
 app.use("/api/tools", requiredToolRoutes);
 app.use("/api/workpiece", WorkpieceSetupRoutes);
+app.use("/api/readyReview", ReadyReviewRoutes);
 
 // start express server and listen the incoming HTTP req  
 app.listen(PORT, () =>{

@@ -20,10 +20,11 @@ function Operation({status, setStatus}){
             <h2>Operation Name</h2>
             <p>{operation.name}</p>
  
-            <div className="ready-status">
+            <div className="operation-status">
                 {status}
             </div>
             <button
+                className="operation-actions"
                 onClick={() => setStatus("RUNNING")}
                 disabled={status !== "READY"} 
                 // once machine is STOPPED, it won't start again (if it enable sataus !== "RUNNING")
@@ -31,6 +32,7 @@ function Operation({status, setStatus}){
                 START
             </button>
             <button
+                className = "operation-actions"
                 onClick={() => setStatus("STOPPED")}
                 disabled={status !== "RUNNING"}
             >

@@ -26,9 +26,10 @@ function ProgressStepper({currentStage, progressPercentage}) {
                     );
                 })}
             </div>
-            <div className="progress-text">
-                Stage {currentStage} of 5 -- {progressPercentage}% completed
-            </div>
+            
+        </div>
+        <div className="progress-text">
+            Stage {currentStage} of 5 -- {progressPercentage}% completed
         </div>
         </>
     );

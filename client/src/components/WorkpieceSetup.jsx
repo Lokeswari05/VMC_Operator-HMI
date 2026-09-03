@@ -86,22 +86,24 @@ function WorkpieceSetup({onNext}) {
         <div className = "stage-card">
             <h2> Workpiece Setup</h2>
 
-            {setupItems.map((setupItem) => (
-                <div 
-                    key={setupItem.id}
-                    className = "check-item"
-                >
-                    <span>{setupItem.label}</span>
-                    <span>{setupItem.value}</span>
-
-                    <button 
-                        onClick={() => handleConfirm(setupItem.id)}
-                        disabled = {confirmedItems.includes(setupItem.id)}
+            <div className="workpiece-list" >
+                {setupItems.map((setupItem) => (
+                    <div 
+                        key={setupItem.id}
+                        className = "workpiece-item"
                     >
-                        {confirmedItems.includes(setupItem.id) ? "Confirmed" : "Confirm"}
-                    </button>
-                </div>
-            ))}
+                        <span>{setupItem.label}</span>
+                        <span>{setupItem.value}</span>
+
+                        <button 
+                            onClick={() => handleConfirm(setupItem.id)}
+                            disabled = {confirmedItems.includes(setupItem.id)}
+                        >
+                            {confirmedItems.includes(setupItem.id) ? "Confirmed" : "Confirm"}
+                        </button>
+                    </div>
+                ))}
+            </div>
 
             <div className="check-progress">
                 <p>{confirmedItems.length} / {setupItems.length} of complete </p>

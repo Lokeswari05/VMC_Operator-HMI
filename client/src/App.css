@@ -1,26 +1,41 @@
 /* general */
+
 * {
   box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
 }
 
 body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
-/* app layout */
+
+button {
+  font-family: inherit;
+}
+
+/* app  */
 .app {
   min-height: 100vh;
   background: #f4f5f7;
   color: #1f2937;
 }
 
-/* top strip */
+/* top-strip */
+
 .top-strip {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+
   padding: 16px 24px;
+
   background: #ffffff;
   border-bottom: 1px solid #d1d5db;
 }
@@ -42,24 +57,34 @@ body {
   font-size: 14px;
 }
 
-/* main content */
+/* main-content */
+
 .main-content {
+  width: 100%;
   max-width: 1100px;
+
   margin: 0 auto;
   padding: 40px 24px;
 }
 
 .main-content h1 {
-  margin-bottom: 8px;
+  margin: 0 0 8px;
+  font-size: 32px;
 }
 
 .main-content > p {
+  margin-top: 0;
   color: #6b7280;
 }
-/* stage card */
+
+/* stageCard */
+
 .stage-card {
+  width: 100%;
+
   margin-top: 32px;
   padding: 32px;
+
   background: #ffffff;
   border: 1px solid #d1d5db;
   border-radius: 12px;
@@ -67,21 +92,65 @@ body {
 
 .stage-card h2 {
   margin-top: 0;
+  margin-bottom: 8px;
 }
+
+.stage-card > p {
+  color: #6b7280;
+}
+
+/* button */
 
 .stage-card button {
   margin-top: 24px;
+
   padding: 14px 24px;
-  border: none;
+
+  border: 1px solid transparent;
   border-radius: 8px;
+
+  background: #111827;
+  color: #ffffff;
+
   font-size: 15px;
   font-weight: 600;
+
   cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
+.stage-card button:hover:not(:disabled) {
+  background: #374151;
+}
+
+.stage-card button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* confirm */
+
+.check-item button:disabled,
+.tool-item button:disabled {
+  background: #ffffff;
+  color: #15803d;
+
+  border: 2px solid #22c55e;
+
+  opacity: 1;
+  cursor: default;
+}
+
+
 /* progressStepper */
+
 .progress-section {
   margin-top: 32px;
+  
 }
 
 .stage-list {
@@ -94,16 +163,19 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+
   color: #6b7280;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .stage-number {
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 28px;
   height: 28px;
+
   border: 1px solid #d1d5db;
   border-radius: 50%;
 }
@@ -119,15 +191,19 @@ body {
 }
 
 .progress-text {
-  margin-top: 12px;
-  font-size: 13px;
+  margin-top: 20px;
+
+  font-size: 14px;
   color: #6b7280;
 }
-/* Machine check */
+
+/* stage 1 machine checks */
+
 .check-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
+
   margin-top: 24px;
 }
 
@@ -135,12 +211,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
+
   padding: 16px;
+
   border: 1px solid #d1d5db;
   border-radius: 8px;
+
+  background: #ffffff;
+}
+
+.check-item span {
+  line-height: 1.4;
 }
 
 .check-item button {
+  flex-shrink: 0;
   margin-top: 0;
 }
 
@@ -150,29 +236,41 @@ body {
 
 .check-progress {
   margin-top: 20px;
+
   font-weight: 600;
+  color: #374151;
 }
+
 .check-progress + button {
   margin-top: 16px;
 }
-/* tools Setup */
+
+/* stage 2 tools */
+
 .tool-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
+
   margin-top: 24px;
 }
 
 .tool-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 100px 1fr 100px 120px 150px;
   align-items: center;
-  justify-content: space-between;
+  gap: 16px;
+
   padding: 16px;
+
   border: 1px solid #d1d5db;
   border-radius: 8px;
+
+  background: #ffffff;
 }
 
 .tool-item button {
+  justify-self: center;
   margin-top: 0;
 }
 
@@ -180,13 +278,19 @@ body {
   cursor: default;
 }
 
-.check-progress {
-  margin-top: 20px;
+.tool-status {
   font-weight: 600;
 }
-.check-progress + button {
-  margin-top: 16px;
+
+/* .tool-item:has(button:disabled) {
+  border-color: #22c55e;
+} */
+
+.tool-item:has(button:disabled) .tool-status {
+  color: #15803d;
 }
+
+/* stage 4 review */
 
 .ready-status {
   display: flex;
@@ -194,12 +298,254 @@ body {
   justify-content: center;
 
   min-height: 80px;
+
   margin-top: 20px;
 
   border: 1px solid #d1d5db;
   border-radius: 8px;
 
+  background: #ffffff;
+
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 0.08em;
+}
+
+/* stage 3 workpiece */
+
+.workpiece-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  margin-top: 24px;
+}
+
+.workpiece-item {
+  display: grid;
+  grid-template-columns: 180px 1fr 150px;
+
+  align-items: center;
+  gap: 16px;
+
+  padding: 16px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+}
+
+.workpiece-item button {
+  margin-top: 0;
+  justify-self: center;
+}
+
+.workpiece-item button:disabled {
+  background: #ffffff;
+  color: #15803d;
+  border: 2px solid #22c55e;
+
+  opacity: 1;
+  cursor: default;
+}
+
+/* stage 5 operation */
+
+.operation-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100px;
+
+  margin-top: 24px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.operation-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.operation-actions button {
+  min-width: 120px;
+}
+
+/* responsive for tab */
+@media (max-width: 800px) {
+
+  .top-strip {
+    padding: 14px 18px;
+  }
+
+  .main-content {
+    padding: 28px 18px;
+  }
+
+  .main-content h1 {
+    font-size: 28px;
+  }
+
+  .stage-card {
+    padding: 24px;
+  }
+
+  .stage-list {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .tool-item {
+    grid-template-columns: 80px 1fr 90px;
+
+    gap: 12px;
+  }
+
+  .tool-item .tool-status {
+    grid-column: 3;
+  }
+
+  .tool-item button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .workpiece-item {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .workpiece-item button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+/* for mobile */
+
+@media (max-width: 600px) {
+
+  .top-strip {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .top-strip div {
+    width: 100%;
+  }
+
+  .main-content {
+    padding: 20px 12px;
+  }
+
+  .main-content h1 {
+    font-size: 24px;
+  }
+
+  .stage-card {
+    margin-top: 20px;
+    padding: 18px;
+
+    border-radius: 10px;
+  }
+
+  .stage-card h2 {
+    font-size: 21px;
+  }
+
+  .check-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .check-item button {
+    width: 100%;
+  }
+
+  .tool-item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 10px;
+  }
+
+  .tool-item span {
+    width: 100%;
+  }
+
+  .tool-item button {
+    width: 100%;
+  }
+
+  .workpiece-item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 10px;
+  }
+
+  .workpiece-item button {
+    width: 100%;
+  }
+
+  .ready-status {
+    min-height: 70px;
+    font-size: 18px;
+  }
+
+  .operation-status {
+    min-height: 80px;
+    font-size: 22px;
+  }
+
+  .operation-actions {
+    flex-direction: column;
+  }
+
+  .operation-actions button {
+    width: 100%;
+  }
+
+  .stage-card button {
+    padding: 13px 18px;
+  }
+}
+
+/* responsive upto 400px small */
+
+@media (max-width: 400px) {
+
+  .main-content {
+    padding: 16px 10px;
+  }
+
+  .stage-card {
+    padding: 15px;
+  }
+
+  .stage {
+    font-size: 12px;
+  }
+
+  .stage-number {
+    width: 25px;
+    height: 25px;
+  }
+
+  .progress-text {
+    font-size: 12px;
+  }
 }

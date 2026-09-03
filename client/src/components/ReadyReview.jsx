@@ -35,16 +35,19 @@ function ReadyReview({onNext, machineComplete, toolsComplete, workpieceComplete}
     return(
         <div className="stage-card">
             <h2>Final Review</h2>
-            {reviewItems.map((reviewItem) => (
-                <div 
-                    key ={reviewItem.id}
-                    className= "check-item"
-                >
-                    <span>{reviewItem.label}</span>
-                    <span>{reviewItem.value}</span>
-                </div>
 
-            ))}
+            <div className="check-list">
+                {reviewItems.map((reviewItem) => (
+                    <div 
+                        key ={reviewItem.id}
+                        className= "check-item"
+                    >
+                        <span>{reviewItem.label}</span>
+                        <span>{reviewItem.value}</span>
+                    </div>
+
+                ))}
+            </div>
             <div className= "ready-status">
                 {allReady ? "READY" : "NOT READY"}
             </div>

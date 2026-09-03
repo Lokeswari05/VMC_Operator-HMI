@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import dns from "node:dns";
 import { connectDB } from "./config/db.js";
 import MachineCheckRoutes from "./routes/MachineCheckRoutes.js"
+import requiredToolRoutes from "./routes/requiredToolRoutes.js"
 
 dotenv.config()
 
@@ -21,6 +22,7 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 app.use("/api/checks", MachineCheckRoutes);
+app.use("/api/tools", requiredToolRoutes);
 
 // start express server and listen the incoming HTTP req  
 app.listen(PORT, () =>{

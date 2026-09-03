@@ -1,37 +1,55 @@
+import { useEffect } from "react";
 import { useState } from "react";
 
 function ToolSetup({onNext}){
     const cncProgram = "VMC_BRACKET_01";
     const programRevision =  "Rev A";
-    const tools = [
-        {
-            number: "T01",
-            type: "10 mm Flat End Mill",
-        },
-        {
-            number: "T02",
-            type: "6 mm Flat End Mill",
-        },
-        {
-            number: "T03",
-            type: "8 mm Drill",
-        },
-        {
-            number: "T04",
-            type: "10 mm Spot Drill",
-        },
-    ];
+    
+    const [tools, setTools] = useState([]);
 
     const[confirmedTools, setConfirmedTools] = useState([]);
-    function handleConfirm(toolNumber){
-        setConfirmedTools((previousTools) => {
-            if(previousTools.includes(toolNumber)){
-                return previousTools;
+
+    useEffect(() => {
+        fetch("http://localhost:5000/api/tools")
+        .then((response) => response.json())
+        .then((data) => setTools(data));
+    }, []); 
+
+    // function handleConfirm(toolNumber){
+    //     setConfirmedTools((previousTools) => {
+    //         if(previousTools.includes(toolNumber)){
+    //             return previousTools;
+    //         }
+    //         else{
+    //             return [...previousTools, toolNumber];
+    //         }
+    //     });
+    // }
+
+    async function handleConfirm(id){
+        try {
+            const response = await fetch(`http://localhost:5000/api/tools/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to confirm check");
             }
-            else{
-                return [...previousTools, toolNumber];
-            }
-        });
+
+            setConfirmedTools((previousTools) => {
+                if(previousTools.includes(id)){
+                    return previousTools;
+                }
+                else{
+                    return [...previousTools, id];
+                }
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     
@@ -45,20 +63,20 @@ function ToolSetup({onNext}){
                 
                 {tools.map((tool) => (
                     <div className = "tool-item"
-                        key ={tool.number}
+                        key ={tool.id}
                     >
-                        <span>{tool.number}</span>
-                        <span>{tool.type}</span>
+                        <span>{tool.id}</span>
+                        <span>{tool.label}</span>
 
                         <span className = "tool-status">
-                            {confirmedTools.includes(tool.number) ? "READY" : "PENDING"}
+                            {confirmedTools.includes(tool.id) ? "READY" : "PENDING"}
                         </span>
 
                         <button
-                            onClick = {() => handleConfirm(tool.number)}
-                            disabled = {confirmedTools.includes(tool.number)}
+                            onClick = {() => handleConfirm(tool.id)}
+                            disabled = {confirmedTools.includes(tool.id)}
                         >
-                            {confirmedTools.includes(tool.number) ? "Confirmed" : "Confirm"}
+                            {confirmedTools.includes(tool.id) ? "Confirmed" : "Confirm"}
                         </button>
 
                         

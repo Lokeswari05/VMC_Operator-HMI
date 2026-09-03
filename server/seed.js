@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import MachineCheck from "./models/MachineCheck.js";
 import dns from "node:dns";
+import RequiredTool from "./models/RequiredTool.js";
 
 dotenv.config();
 
@@ -40,11 +41,39 @@ const checks = [
   },
 ];
 
+const tools = [
+    {
+        id: "T01",
+        label: "10 mm Flat End Mill",
+        status: "PENDING",
+    },
+    {
+        id: "T02",
+        label: "6 mm Flat End Mill",
+        status: "PENDING",
+    },
+    {
+        id: "T03",
+        label: "8 mm Drill",
+        status: "PENDING",
+    },
+    {
+        id: "T04",
+        label: "10 mm Spot Drill",
+        status: "PENDING",
+    },
+];
+
 await mongoose.connect(process.env.MONGO_URI);
 
 await MachineCheck.deleteMany();
 await MachineCheck.insertMany(checks);
 
 console.log("Machine checks preloaded");
+
+await RequiredTool.deleteMany();
+await RequiredTool.insertMany(tools);
+
+console.log("All required tools are preloaded.");
 
 await mongoose.disconnect();

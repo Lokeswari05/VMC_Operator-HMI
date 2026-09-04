@@ -39,12 +39,13 @@ function WorkpieceSetup({onNext}) {
     //         value: workpiece.workOffset,
     //     },
     // ];
+    const API_URI = import.meta.env.VITE_API_URI || "http://localhost:5000";
     const [setupItems, setItems] = useState([]);
 
     const [confirmedItems, setConfirmedItems] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/workpiece")
+        fetch(`${API_URI}/api/workpiece`)
         .then((response) => response.json())
         .then((data) => setItems(data));
     }, []);
@@ -60,7 +61,7 @@ function WorkpieceSetup({onNext}) {
 
     async function handleConfirm(id){
         try {
-            const response = await fetch(`http://localhost:5000/api/workpiece/${id}`, {
+            const response = await fetch(`${API_URI}/api/workpiece/${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

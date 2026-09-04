@@ -23,11 +23,12 @@ function ReadyReview({onNext, machineComplete, toolsComplete, workpieceComplete}
     //         value: readyReview.workpiece,
     //     },
     // ];
+    const API_URI = import.meta.env.VITE_API_URI || "http://localhost:5000";
     const [reviewItems, setReviewItems] = useState([]);
     const allReady = machineComplete && toolsComplete && workpieceComplete;
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/readyReview")
+        fetch(`${API_URI}/api/readyReview`)
         .then((response) => response.json())
         .then((data) => setReviewItems(data)); 
     }, []);

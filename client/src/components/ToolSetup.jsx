@@ -4,13 +4,13 @@ import { useState } from "react";
 function ToolSetup({onNext}){
     const cncProgram = "VMC_BRACKET_01";
     // const programRevision =  "Rev A";
-    
+    const API_URI = import.meta.env.VITE_API_URI || "http://localhost:5000";
     const [tools, setTools] = useState([]);
 
     const[confirmedTools, setConfirmedTools] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/tools")
+        fetch(`${API_URI}/api/tools`)
         .then((response) => response.json())
         .then((data) => setTools(data));
     }, []); 
@@ -28,7 +28,7 @@ function ToolSetup({onNext}){
 
     async function handleConfirm(toolNumber){
         try {
-            const response = await fetch(`http://localhost:5000/api/tools/${toolNumber}`, {
+            const response = await fetch(`${API_URI}/api/tools/${toolNumber}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

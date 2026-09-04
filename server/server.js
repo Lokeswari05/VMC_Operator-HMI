@@ -1,9 +1,9 @@
 import express from "express"
 import dotenv from"dotenv"
 import cors from "cors"
-import mongoose from "mongoose";
 import dns from "node:dns";
 import { connectDB } from "./config/db.js";
+
 import MachineCheckRoutes from "./routes/MachineCheckRoutes.js"
 import requiredToolRoutes from "./routes/requiredToolRoutes.js"
 import WorkpieceSetupRoutes from "./routes/WorkpieceSetupRoutes.js"
@@ -27,7 +27,20 @@ app.use("/api/tools", requiredToolRoutes);
 app.use("/api/workpiece", WorkpieceSetupRoutes);
 app.use("/api/readyReview", ReadyReviewRoutes);
 
-// start express server and listen the incoming HTTP req  
-app.listen(PORT, () =>{
-    console.log(`server running on PORT ${PORT}`);
-}); 
+// Test route
+app.get("/", (req, res) => {
+  res.json({
+    message: "VMC Operator HMI Backend is running"
+  });
+});
+
+app.get("/health", (req, res) => {
+  res.json({
+    status: "OK"
+  });
+});
+
+// start express server
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`VMC HMI server running on PORT ${PORT}`);
+});

@@ -1,20 +1,20 @@
 import {useState, useEffect} from "react";
 
 function MachineChecks({onNext}){
-    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_URI = import.meta.env.VITE_API_URI || "http://localhost:5000";
     const[checks, setChecks] = useState([]);
 
     const [confirmedChecks, setConfirmedChecks] = useState([]);
     
     useEffect(() => {
-        fetch(`${API_URL}/api/checks`)
+        fetch(`${API_URI}/api/checks`)
         .then((response) => response.json())
         .then((data) => setChecks(data));
     }, []);
     
     async function handleConfirm(id){
         try {
-            const response = await fetch(`${API_URL}/api/checks/${id}`, {
+            const response = await fetch(`${API_URI}/api/checks/${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
